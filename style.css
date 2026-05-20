@@ -1,0 +1,252 @@
+/* Core Document Configurations & Variables */
+:root {
+    --bg-gradient: radial-gradient(circle at center, #1a1c2e 0%, #080911 100%);
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --border-color: rgba(255, 255, 255, 0.06);
+    --primary-neon: #a855f7; /* Vibrant Purple */
+    --accent-cyan: #00f0ff;
+    --success-green: #10b981;
+    --text-muted: #8e9bb4;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: var(--bg-gradient);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    padding: 20px;
+}
+
+/* Main UI Frame Glass Box Container */
+.todo-container {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(14px);
+    border-radius: 24px;
+    padding: 35px 30px;
+    box-shadow: 0 25px 55px rgba(0, 0, 0, 0.6);
+    width: 100%;
+    max-width: 480px;
+}
+
+h1 {
+    font-size: 1.7rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-align: center;
+    margin-bottom: 25px;
+    color: #cbd5e1;
+}
+
+/* Input Fields and Layout Groups Form */
+.todo-input-area {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+#taskInput {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--border-color);
+    padding: 14px 18px;
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+#taskInput:focus {
+    border-color: var(--primary-neon);
+}
+
+/* Date-Time Group Pickers Layout styling */
+.datetime-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.datetime-wrapper label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+}
+
+#dateTimeInput {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--border-color);
+    padding: 10px 14px;
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 0.95rem;
+    outline: none;
+}
+
+#dateTimeInput::-webkit-calendar-picker-indicator {
+    filter: invert(1); /* Flip icon to bright color to blend with dark mode */
+    cursor: pointer;
+}
+
+/* Master Primary Form Button Add Submit Actions */
+.add-btn {
+    background: linear-gradient(135deg, var(--primary-neon) 0%, #7c3aed 100%);
+    color: #ffffff;
+    border: none;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+}
+
+.add-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(168, 85, 247, 0.4);
+}
+
+/* Management Sorting Selection Filters List Button Row Tabs */
+.filters {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 15px;
+}
+
+.filter-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    color: #ffffff;
+}
+
+.filter-btn.active {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--accent-cyan);
+}
+
+/* Unordered Lists Tasks Element Container Frame */
+.task-list {
+    list-style: none;
+    max-height: 280px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.task-list::-webkit-scrollbar {
+    width: 4px;
+}
+.task-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+/* Individual Task Item Card Elements injected row entries */
+.task-item {
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid var(--border-color);
+    padding: 14px 16px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    gap: 15px;
+    animation: fadeIn 0.25s ease forwards;
+}
+
+/* Inside Context Wrapper handling string details text metrics descriptions */
+.task-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.task-text {
+    font-size: 1.05rem;
+    color: #f1f5f9;
+    word-break: break-word;
+    transition: all 0.2s;
+}
+
+.task-date {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* Task Modifications Active States Modifiers Rules Sets */
+.task-item.completed {
+    border-color: rgba(16, 185, 129, 0.15);
+    background: rgba(16, 185, 129, 0.01);
+}
+
+.task-item.completed .task-text {
+    text-decoration: line-through;
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+/* Group Wrapper housing mutations button triggers actions tools */
+.task-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-color);
+    color: #ffffff;
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.action-btn.complete-toggle:hover {
+    background: var(--success-green);
+    border-color: var(--success-green);
+}
+
+.action-btn.edit-trigger:hover {
+    background: #eab308; /* Yellow edit accent hover */
+    border-color: #eab308;
+    color: #000;
+}
+
+.action-btn.delete-trigger:hover {
+    background: #ef4444; /* Red delete accent hover */
+    border-color: #ef4444;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}

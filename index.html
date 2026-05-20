@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCT_WD_4 - Premium To-Do App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="todo-container">
+        <h1>TASK MANAGER</h1>
+        
+        <form id="todoForm" class="todo-input-area">
+            <input type="text" id="taskInput" placeholder="Add a new task..." required maxlength="80">
+            
+            <div class="datetime-wrapper">
+                <label for="dateTimeInput">Due Date & Time:</label>
+                <input type="datetime-local" id="dateTimeInput">
+            </div>
+            
+            <button type="submit" class="add-btn">Add Task</button>
+        </form>
+
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="pending">Pending</button>
+            <button class="filter-btn" data-filter="completed">Completed</button>
+        </div>
+
+        <ul id="taskList" class="task-list">
+            </ul>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
