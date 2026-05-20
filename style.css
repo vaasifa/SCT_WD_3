@@ -1,14 +1,4 @@
-/* Core Document Configurations & Variables */
-:root {
-    --bg-gradient: radial-gradient(circle at center, #1a1c2e 0%, #080911 100%);
-    --card-bg: rgba(255, 255, 255, 0.03);
-    --border-color: rgba(255, 255, 255, 0.06);
-    --primary-neon: #a855f7; /* Vibrant Purple */
-    --accent-cyan: #00f0ff;
-    --success-green: #10b981;
-    --text-muted: #8e9bb4;
-}
-
+/* Core Document Configuration and Resets */
 * {
     margin: 0;
     padding: 0;
@@ -17,236 +7,174 @@
 }
 
 body {
-    background: var(--bg-gradient);
+    background: radial-gradient(circle at center, #1b1e2e 0%, #090a10 100%);
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     color: #ffffff;
-    padding: 20px;
-}
-
-/* Main UI Frame Glass Box Container */
-.todo-container {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    backdrop-filter: blur(14px);
-    border-radius: 24px;
-    padding: 35px 30px;
-    box-shadow: 0 25px 55px rgba(0, 0, 0, 0.6);
-    width: 100%;
-    max-width: 480px;
-}
-
-h1 {
-    font-size: 1.7rem;
-    font-weight: 700;
-    letter-spacing: 4px;
-    text-align: center;
-    margin-bottom: 25px;
-    color: #cbd5e1;
-}
-
-/* Input Fields and Layout Groups Form */
-.todo-input-area {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 25px;
-}
-
-#taskInput {
-    background: rgba(0, 0, 0, 0.25);
-    border: 1px solid var(--border-color);
-    padding: 14px 18px;
-    border-radius: 12px;
-    color: #ffffff;
-    font-size: 1rem;
-    outline: none;
-    transition: border-color 0.2s;
-}
-
-#taskInput:focus {
-    border-color: var(--primary-neon);
-}
-
-/* Date-Time Group Pickers Layout styling */
-.datetime-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.datetime-wrapper label {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    letter-spacing: 0.5px;
-}
-
-#dateTimeInput {
-    background: rgba(0, 0, 0, 0.25);
-    border: 1px solid var(--border-color);
-    padding: 10px 14px;
-    border-radius: 10px;
-    color: #ffffff;
-    font-size: 0.95rem;
-    outline: none;
-}
-
-#dateTimeInput::-webkit-calendar-picker-indicator {
-    filter: invert(1); /* Flip icon to bright color to blend with dark mode */
-    cursor: pointer;
-}
-
-/* Master Primary Form Button Add Submit Actions */
-.add-btn {
-    background: linear-gradient(135deg, var(--primary-neon) 0%, #7c3aed 100%);
-    color: #ffffff;
-    border: none;
-    padding: 14px;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 12px;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: all 0.2s ease;
-}
-
-.add-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(168, 85, 247, 0.4);
-}
-
-/* Management Sorting Selection Filters List Button Row Tabs */
-.filters {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 25px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding-bottom: 15px;
-}
-
-.filter-btn {
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    font-weight: 500;
-    cursor: pointer;
-    padding: 6px 12px;
-    border-radius: 8px;
-    transition: all 0.2s;
-}
-
-.filter-btn:hover {
-    color: #ffffff;
-}
-
-.filter-btn.active {
-    background: rgba(255, 255, 255, 0.08);
-    color: var(--accent-cyan);
-}
-
-/* Unordered Lists Tasks Element Container Frame */
-.task-list {
-    list-style: none;
-    max-height: 280px;
-    overflow-y: auto;
-    padding-right: 5px;
-}
-
-.task-list::-webkit-scrollbar {
-    width: 4px;
-}
-.task-list::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-}
-
-/* Individual Task Item Card Elements injected row entries */
-.task-item {
-    background: rgba(255, 255, 255, 0.01);
-    border: 1px solid var(--border-color);
-    padding: 14px 16px;
-    border-radius: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-    gap: 15px;
-    animation: fadeIn 0.25s ease forwards;
-}
-
-/* Inside Context Wrapper handling string details text metrics descriptions */
-.task-content {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    flex-grow: 1;
     overflow: hidden;
 }
 
-.task-text {
-    font-size: 1.05rem;
-    color: #f1f5f9;
-    word-break: break-word;
-    transition: all 0.2s;
+/* Master Center Interface Box Layout Container */
+.game-container {
+    background: rgba(255, 255, 255, 0.02);
+    padding: 35px;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
 }
 
-.task-date {
-    font-size: 0.75rem;
-    color: var(--text-muted);
+h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 5px;
+    margin-bottom: 20px;
+    color: #a4b3e6;
 }
 
-/* Task Modifications Active States Modifiers Rules Sets */
-.task-item.completed {
-    border-color: rgba(16, 185, 129, 0.15);
-    background: rgba(16, 185, 129, 0.01);
+/* Informational Real-Time Status Area Indicator */
+.status {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
 }
 
-.task-item.completed .task-text {
-    text-decoration: line-through;
-    color: var(--text-muted);
-    opacity: 0.6;
+.status span {
+    font-weight: 700;
 }
 
-/* Group Wrapper housing mutations button triggers actions tools */
-.task-actions {
+/* The 3x3 Grid Component Wrapper */
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+/* Individual Cell Matrix Squares Node Styles */
+.cell {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
     display: flex;
-    gap: 8px;
-}
-
-.action-btn {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--border-color);
-    color: #ffffff;
-    padding: 6px 10px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    border-radius: 6px;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.8rem;
+    font-weight: 700;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    user-select: none;
 }
 
-.action-btn.complete-toggle:hover {
-    background: var(--success-green);
-    border-color: var(--success-green);
+/* Cell Matrix Interaction Hover States */
+.cell:hover:empty {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
-.action-btn.edit-trigger:hover {
-    background: #eab308; /* Yellow edit accent hover */
-    border-color: #eab308;
-    color: #000;
+/* Dynamic Player Color Assignments and Glow Filters */
+.cell.X, .status .x-turn {
+    color: #00ffcc;
+    text-shadow: 0 0 15px rgba(0, 255, 204, 0.6);
 }
 
-.action-btn.delete-trigger:hover {
-    background: #ef4444; /* Red delete accent hover */
-    border-color: #ef4444;
+.cell.O, .status .o-turn {
+    color: #ff007f;
+    text-shadow: 0 0 15px rgba(255, 0, 127, 0.6);
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
+/* Active Animation Injections on User Mark Drop Placement */
+.cell:not(:empty) {
+    animation: scaleIn 0.2s ease-out forwards;
+}
+
+/* Primary Form Control Action Command Buttons */
+.control-btn {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px 30px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.control-btn:hover {
+    background: #ffffff;
+    color: #090a10;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+/* End-Game Screen Modal Backdrop Overlay Configuration Node */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(5, 6, 10, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+/* Visibility State Modifier Injection Class */
+.overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Modal Internal Announcement Board Design Layout Box */
+.modal {
+    background: rgba(27, 30, 46, 0.95);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    max-width: 320px;
+    width: 90%;
+    transform: scale(0.8);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.overlay.active .modal {
+    transform: scale(1);
+}
+
+.modal h2 {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+.modal-btn {
+    background: linear-gradient(135deg, #00ffcc 0%, #00bfff 100%);
+    color: #090a10;
+    border: none;
+}
+
+/* System Animation Frames Mapping Definitions */
+@keyframes scaleIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
 }

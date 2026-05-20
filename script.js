@@ -1,130 +1,123 @@
-// State Arrays Initialization (Load existing browser memory data profiles directly or assign empty arrays)
-let tasks = JSON.parse(localStorage.getItem('todo_tasks')) || [];
-let currentFilter = 'all';
+// Game State Trackers and Core References
+let boardState = ["", "", "", "", "", "", "", "", ""];
+let currentPlayer = "X";
+let isGameActive = true;
 
-// DOM Element Selectors Mapping Nodes References
-const todoForm = document.getElementById('todoForm');
-const taskInput = document.getElementById('taskInput');
-const dateTimeInput = document.getElementById('dateTimeInput');
-const taskList = document.getElementById('taskList');
-const filterButtons = document.querySelectorAll('.filter-btn');
+// Flat Array Index Mapping Matrix representing all 8 possible 3-in-a-row straight winning directions
+const winConditions = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+    [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+    [0, 4, 8], [2, 4, 6]             // Diagonals
+];
 
-// Sync Engine function utility mapping to update local state updates to disk instantly
-function saveTasksToDisk() {
-    localStorage.setItem('todo_tasks', JSON.stringify(tasks));
-}
+// Document DOM Element Target Selectors Nodes
+const cells = document.querySelectorAll('.cell');
+const statusText = document.getElementById('statusText');
+const resetBtn = document.getElementById('resetBtn');
+const restartBtn = document.getElementById('restartBtn');
+const overlay = document.getElementById('overlay');
+const winnerText = document.getElementById('winnerText');
 
-// Handler intercepts submitted input metrics definitions
-todoForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+// Function to handle Cell Interactions
+function handleCellClick(e) {
+    const clickedCell = e.target;
+    const clickedCellIndex = parseInt(clickedCell.getAttribute('data-cell-index'));
 
-    const text = taskInput.value.trim();
-    if (!text) return;
-
-    // Build operational task entry object configuration
-    const newTask = {
-        id: Date.now().toString(), // Generate high probability collision proof unique ID string mapping
-        title: text,
-        dueDate: dateTimeInput.value ? formatDisplayDate(dateTimeInput.value) : "",
-        completed: false
-    };
-
-    tasks.push(newTask);
-    saveTasksToDisk();
-    renderTasks();
-
-    // Flash reset data profiles across interface input components
-    todoForm.reset();
-});
-
-// Format technical DateTime string values into clean readable layout presentation variants
-function formatDisplayDate(dateTimeString) {
-    const options = { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-    return new Date(dateTimeString).toLocaleDateString('en-US', options);
-}
-
-// Function managing item assembly processing layout loops logic configurations rulesets
-function renderTasks() {
-    taskList.innerHTML = "";
-
-    // Parse array tracking parameters variations metrics filtered out targets matching selections keys
-    const filteredTasks = tasks.filter(task => {
-        if (currentFilter === 'pending') return !task.completed;
-        if (currentFilter === 'completed') return task.completed;
-        return true; // Catch 'all'
-    });
-
-    filteredTasks.forEach(task => {
-        const li = document.createElement('li');
-        li.className = `task-item ${task.completed ? 'completed' : ''}`;
-        li.setAttribute('data-id', task.id);
-
-        li.innerHTML = `
-            <div class="task-content">
-                <span class="task-text">${task.title}</span>
-                ${task.dueDate ? `<span class="task-date">📅 Due: ${task.dueDate}</span>` : ''}
-            </div>
-            <div class="task-actions">
-                <button class="action-btn complete-toggle">${task.completed ? 'Undo' : 'Done'}</button>
-                <button class="action-btn edit-trigger">Edit</button>
-                <button class="action-btn delete-trigger">Delete</button>
-            </div>
-        `;
-
-        taskList.appendChild(li);
-    });
-}
-
-// Event Delegation capture processing loops intercepting action clicks within rows nodes directly
-taskList.addEventListener('click', (e) => {
-    const targetButton = e.target;
-    const taskItemRow = targetButton.closest('.task-item');
-    if (!taskItemRow) return;
-    
-    const taskId = taskItemRow.getAttribute('data-id');
-    const index = tasks.findIndex(t => t.id === taskId);
-    if (index === -1) return;
-
-    // Handle STATUS Toggle Action Path
-    if (targetButton.classList.contains('complete-toggle')) {
-        tasks[index].completed = !tasks[index].completed;
-        saveTasksToDisk();
-        renderTasks();
+    // Validation Guard check: Ensure target cell block is blank and state lock is active
+    if (boardState[clickedCellIndex] !== "" || !isGameActive) {
+        return;
     }
+
+    // Process Move Action
+    updateCell(clickedCell, clickedCellIndex);
+    checkForWinner();
+}
+
+// Function to Update data mappings and rendering states on board array allocations
+function updateCell(cellElement, index) {
+    boardState[index] = currentPlayer;
+    cellElement.textContent = currentPlayer;
+    cellElement.classList.add(currentPlayer);
+}
+
+// Function to change Turn Player states configuration references
+function changePlayer() {
+    currentPlayer = (currentPlayer === "X") ? "O" : "X";
     
-    // Handle EDIT Description Action Path
-    else if (targetButton.classList.contains('edit-trigger')) {
-        const textNode = taskItemRow.querySelector('.task-text');
-        const currentText = tasks[index].title;
-        
-        const updatedText = prompt("Modify task description details description:", currentText);
-        if (updatedText !== null && updatedText.trim() !== "") {
-            tasks[index].title = updatedText.trim();
-            saveTasksToDisk();
-            renderTasks();
+    // Inject respective styled classes to matching target layout nodes seamlessly
+    const turnClass = currentPlayer.toLowerCase() + "-turn";
+    statusText.innerHTML = `Player <span class="${turnClass}">${currentPlayer}</span>'s Turn`;
+}
+
+// Function to validate and evaluate results against matrix lookup indices
+function checkForWinner() {
+    let roundWon = false;
+
+    for (let i = 0; i < winConditions.length; i++) {
+        const condition = winConditions[i];
+        const cellA = boardState[condition[0]];
+        const cellB = boardState[condition[1]];
+        const cellC = boardState[condition[2]];
+
+        // Continue parsing if any check tracks empty nodes inside condition mapping index paths
+        if (cellA === "" || cellB === "" || cellC === "") {
+            continue;
+        }
+
+        // Win Condition confirmation matched flag match
+        if (cellA === cellB && cellB === cellC) {
+            roundWon = true;
+            break;
         }
     }
-    
-    // Handle DELETE Target row entry Action Path
-    else if (targetButton.classList.contains('delete-trigger')) {
-        if(confirm("Permanently delete this task item entry track?")) {
-            tasks.splice(index, 1);
-            saveTasksToDisk();
-            renderTasks();
-        }
+
+    if (roundWon) {
+        triggerEndGame(true);
+        return;
     }
-});
 
-// Segment filter menu switching buttons tracking triggers bindings
-filterButtons.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        filterButtons.forEach(b => b.classList.remove('active'));
-        e.target.classList.add('active');
+    // Draw Evaluation check loop tracking across missing empty fields allocations
+    const isDraw = !boardState.includes("");
+    if (isDraw) {
+        triggerEndGame(false);
+        return;
+    }
 
-        currentFilter = e.target.getAttribute('data-filter');
-        renderTasks();
+    // Switch turns safely if execution thresholds hold empty spaces
+    changePlayer();
+}
+
+// Function to manage UI changes upon hitting terminal states
+function triggerEndGame(hasWinner) {
+    isGameActive = false;
+    
+    if (hasWinner) {
+        winnerText.innerHTML = `Player <span class="${currentPlayer.toLowerCase()}-turn">${currentPlayer}</span> Wins!`;
+    } else {
+        winnerText.innerHTML = `<span style="color: #8fa0dd;">It's a Draw!</span>`;
+    }
+    
+    // Smooth fade-in overlay launch
+    overlay.classList.add('active');
+}
+
+// Function to clear states back to foundational default setup parameters configuration settings
+function resetGameEngine() {
+    boardState = ["", "", "", "", "", "", "", "", ""];
+    currentPlayer = "X";
+    isGameActive = true;
+    
+    statusText.innerHTML = `Player <span class="x-turn">X</span>'s Turn`;
+    overlay.classList.remove('active');
+
+    // Clean structural styling elements configurations loops targeting components
+    cells.forEach(cell => {
+        cell.textContent = "";
+        cell.className = "cell"; 
     });
-});
+}
 
-// Bootstrap Setup Event Loop initialization run triggers
-renderTasks();
+// Setup Event Listeners
+cells.forEach(cell => cell.addEventListener('click', handleCellClick));
+resetBtn.addEventListener('click', resetGameEngine);
+restartBtn.addEventListener('click', resetGameEngine);
